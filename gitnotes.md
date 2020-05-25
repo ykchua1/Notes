@@ -22,3 +22,14 @@ to clone from github repos more quickly:
 
 to see who edited each line:
 	git blame <file>
+
+git fetching and merging
+	git fetch: fetch from remote (retrieve objects and references from a remote)
+	git merge: merge into current branch
+	git pull: same as git fetch; git merge
+
+git remotes
+	git remote: list remotes
+	git remote add <name> <url>: add a remote
+	git push <remote> <local branch>:<remote branch>: send objects to remote, and update remote reference
+	

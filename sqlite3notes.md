@@ -159,4 +159,17 @@ PT 14 - GROUP BY
 	strftime('%Y', invoicedate) order by invoiceyear;
 
 PT 15 - HAVING clause
-- 
+- a GROUP BY clause is required before HAVING
+- syntax:
+	GROUP BY
+		column1,
+		column2
+	HAVING
+		searchcondition;  
+- example:
+	select albumid, count(trackid) from tracks group by albumid having count(albumid) between 18 and 20
+	order by albumid;
+- example with INNER JOIN:
+	select tracks.albumid, title, sum(milliseconds) as length from tracks inner join albums on
+	albums.albumid = tracks.albumid GROUP BY tracks.albumid HAVING length > 60000000;
+

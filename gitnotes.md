@@ -16,3 +16,9 @@ useful note: all git commands map to some manipulation of the commit DAG (graph)
 by adding objects and adding/updating references
 
 the purpose of the git staging area is to allow user to choose what modifications to commit
+
+to clone from github repos more quickly:
+	git clone --shallow: clone without the entire version history
+
+to see who edited each line:
+	git blame <file>

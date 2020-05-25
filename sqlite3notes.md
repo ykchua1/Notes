@@ -132,6 +132,10 @@ PT 13 - SELF JOIN
 - note:  AND operator is a logical operator, () also helps with order of operations
 - example given: find the employees from the same city (hint: use select distinct)
 - note: <> means NOT EQUAL
+select distinct e1.city, e1.firstname || ' ' || e1.lastname as fullname from employees as e1 inner join employees as e2 ON e1.city = e2.city and (e1.firstname <> e2.firstname and e1.lastname <> e2.lastname) order by e1.city, e2.last name limit 10
+
+PT 13.5 - FULL OUTER JOIN emulation
+- please refer to the sqlitetutorial.net website for more details
 
 PT 14 - GROUP BY
 - returns one row for each group

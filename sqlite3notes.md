@@ -197,3 +197,27 @@ PT 18 - INTERSECT operator
 
 PT 19 - subqueries
 - note: we have seen this before
+- a subquery is a SELECT statement nested in another statement
+- examples:
+	select column1 from table1 where column1 = (select column1 from table2);
+- case 1: subquery in the WHERE clause
+	select trackid, name, albumid from tracks where albumid = (select albumid from albums where title LIKE
+	"let there be rock");
+	select customerid, firstname, lastname from customers where supportrepid IN (select employeeid from
+	employees where country = "Canada");
+- case 2: subquery in the FROM clause
+	select avg(album.size) from (select sum(bytes) as size from tracks group by albumid) as album;
+- case 3: correlated subquery (note that albums.albumid is equal to a number)
+	select albumid, title from albums where (select sum(bytes) from tracks where tracks.albumid = albums.albumid
+	) < 10000000 order by title;
+- case 3.5: correlated subquery in the SELECT clause
+	select albumid, title, (select count(trackid) from tracks where tracks.albumid = albums.albumid) as
+	tracks_count from albums order by tracks_count DESC;
+
+PT 20 - EXISTS operator
+- checks whether the subquery returns any row
+- example:
+	select * from artists a where not exists (select 1 from albums where artistid = a.artistid) order by name;
+- another example:
+	select customerid, firstname, lastname, company from customers c where exists (select 1 from invoices where
+	customerid = c.customerid) order by firstname, lastname;

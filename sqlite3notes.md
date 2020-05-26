@@ -173,3 +173,27 @@ PT 15 - HAVING clause
 	select tracks.albumid, title, sum(milliseconds) as length from tracks inner join albums on
 	albums.albumid = tracks.albumid GROUP BY tracks.albumid HAVING length > 60000000;
 
+PT 16 - UNION operator
+- used to combine rows from 2 or more queries
+- syntax: 
+	query_1
+	UNION [ALL]
+	query_2
+	UNION [ALL]
+	query_3
+	...;
+- example:
+	select firstname, lastname, 'employee' as type from employees UNION select firstname, lastname, 
+	'customer' from customers ORDER BY firstname, lastname;
+
+PT 17 - EXCEPT operator
+- example:
+	select artistid from artists EXCEPT select artistid from albums;
+
+
+PT 18 - INTERSECT operator
+- example:
+	select customerid from customers INTERSECT select customerid from invoices order by customerid
+
+PT 19 - subqueries
+- note: we have seen this before

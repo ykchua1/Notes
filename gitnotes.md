@@ -36,3 +36,8 @@ git remotes
 unstaging files on git
 	git reset [<commit>] [<file>]: <commit> defaults to HEAD, if <file> not specified, means all files
 
+stage specific lines
+	git add -p: this adds by patches
+	git diff --staged: to look at the diff of just the patches added
+	note: the add-patch have options for splitting hunks (s) or editing (e)
+

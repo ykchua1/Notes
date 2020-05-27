@@ -33,3 +33,6 @@ git remotes
 	git remote add <name> <url>: add a remote
 	git push <remote> <local branch>:<remote branch>: send objects to remote, and update remote reference
 	
+unstaging files on git
+	git reset [<commit>] [<file>]: <commit> defaults to HEAD, if <file> not specified, means all files
+

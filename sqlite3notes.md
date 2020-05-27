@@ -147,7 +147,7 @@ PT 14 - GROUP BY
 - example:
 	select albumid, COUNT(trackid) from tracks group by albumid order by COUNT(trackid) DESC;
 - GROUP BY and INNER JOIN: to grab colums from another table eg. Title of album
-	select tracks.albumid, title, count(trackid) from tracks INNER JOIN albums ON albums.albumid = tracks.albumid 
+	select tracks.albumid, title, count(trackid) from tracks INNER JOIN albums ON albums.albumid = tracks.albumid
 	GROUP BY albums.albumid;
 - GROUP BY with HAVING clause (for filtering groups)
 	select tracks.albumid, title, count(trackid) from tracks inner join albums on albums.albumid = tracks.albumid
@@ -221,3 +221,64 @@ PT 20 - EXISTS operator
 - another example:
 	select customerid, firstname, lastname, company from customers c where exists (select 1 from invoices where
 	customerid = c.customerid) order by firstname, lastname;
+
+PT 21 - CASE
+- you can use CASE in any clause (eg. WHERE, ORDER BY, ...) or statement (eg. SELECT, UPDATE, DELETE)
+- the CASE expression is similar to the if-then-else statement in other programming languages
+- example: simple CASE
+	select customerid, firstname, lastname, CASE country WHEN 'USA' THEN 'Domestic' ELSE 'Foreign' END as..
+	..customergroup
+	from customers
+	order by lastname, firstname; 
+- example: searched CASE
+	select trackid, name, CASE WHEN milliseconds < 60000 THEN 'short'
+		WHEN milliseconds > 60000 and milliseconds < 300000 THEN 'medium'
+		ELSE 'long'
+		END as category
+	from tracks;
+
+PT 22 - INSERT (changing data)
+- for inserting new rows into a table
+- you can insert a row into a table using data provided by a select statement
+- syntax:
+	INSERT INTO table (column1, column2, ..)
+	VALUES (value1, value2, ..);
+- example: no need to add values of artistid, because the artistid is set to auto-increment
+	INSERT INTO artists(name) values('Bud Powell');
+- inserting multiple rows into table
+	INSERT INTO table1 (column1, column2, ..)
+	VALUES (value1, value2, ..), (value1, value2, ..);
+- example:
+	INSERT INTO artists(name) VALUES ("Buddy Rich"), ("Candido"), ("Charlie Byrd");
+- inserting default values:
+	* inserts default values if default value of the column is specified
+	* if no default value specified, then inserts NULL
+	INSERT INTO artists DEFAULT VALUES;
+- inserting new rows with data provided by a select statement
+	CREATE TABLE artists_backup(ArtistId INTEGER PRIMARY KEY AUTOINCREMENT, Name NVARCHAR);
+	followed by
+	INSERT INTO artists_backup SELECT artistid, name from artists;
+
+PT 23 - UPDATE (changing data)
+- updating data of existing rows in the table
+- syntax:
+	UPDATE table
+	SET column1 = new_value_1,
+	    column2 = new_value_2
+	WHERE search_condition
+	ORDER column_or_expression
+	LIMIT row_count OFFSET offset;
+- example 1: update one column
+	update employees set lastname = "Smith" where employeeid = 3;
+- example 2: update multiple columns
+	UPDATE employees
+	SET city = "Toronto", state = 'ON', postalcode = 'MSP 2N7'
+	WHERE employeeid = 4;
+- example 3: update with order by and limit clause
+	UPDATE employees
+	SET email = LOWER(firstname || "." || lastname || "@chinookcorp.com")
+	ORDER BY firstname
+	LIMIT 1;
+- example 4: update all rows
+	UPDATE employees
+	SET email = LOWER(firstname || "." || lastname || "@chinookcorp.com");
